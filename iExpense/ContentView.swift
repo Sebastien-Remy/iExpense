@@ -8,28 +8,33 @@
 
 import SwiftUI
 
-struct secondView: View {
-    @Environment(\.presentationMode) var presentationMode
-    var name: String
-    
-    var body: some View {
-        Button("Hello \(name)") {
-            self.presentationMode.wrappedValue.dismiss()
-        }
-    }
-}
 
 struct ContentView: View {
     
-    @State private var shohwingSheet = false
+    @State private var numbers = [Int]()
+    @State private var currentNumber = 1
     
     var body: some View {
-        Button("Show sheet") {
-            self.shohwingSheet.toggle()
+        NavigationView {
+            VStack {
+                List {
+                    ForEach (numbers, id: \.self) {
+                        Text ("\($0)")
+                    }
+                    .onDelete(perform: removeRows)
+                }
+                Button("Add number") {
+                    self.numbers.append(self.currentNumber)
+                    self.currentNumber += 1
+                }
+            }
+        .navigationBarTitle("iExpense")
+            .navigationBarItems(leading: EditButton())
         }
-        .sheet(isPresented: $shohwingSheet) {
-            secondView(name: "Seb")
-        }
+    }
+    
+    func removeRows(at offSets: IndexSet) {
+        numbers.remove(atOffsets: offSets)
     }
 }
 
