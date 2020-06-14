@@ -9,9 +9,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @Environment(\.presentationMode) var presentationMode
+    
     @ObservedObject var expenses = Expenses()
+    
     @State private var showingAddExpense = false
-
+    
     var body: some View {
         NavigationView {
             List {
@@ -22,7 +26,7 @@ struct ContentView: View {
                                 .font(.headline)
                             Text(item.type)
                         }
-
+                        
                         Spacer()
                         Text("$\(item.amount)")
                     }
@@ -37,12 +41,12 @@ struct ContentView: View {
                     Image(systemName: "plus")
                 }
             )
-            .sheet(isPresented: $showingAddExpense) {
-                AddView(expenses: self.expenses)
+                .sheet(isPresented: $showingAddExpense) {
+                    AddView(expenses: self.expenses)
             }
         }
     }
-
+    
     func removeItems(at offsets: IndexSet) {
         expenses.items.remove(atOffsets: offsets)
     }

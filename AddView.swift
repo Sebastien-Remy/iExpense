@@ -40,7 +40,7 @@ struct AddView: View {
                                                type: self.type,
                                                amount: actualAmount)
                         self.expenses.items.append(item)
-                      //  self.presentationMode.wrappedValue.dismiss()
+                        self.presentationMode.wrappedValue.dismiss()
                     }
             })
         }    }
