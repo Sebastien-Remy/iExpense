@@ -8,6 +8,31 @@
 
 import SwiftUI
 
+
+struct PrimaryLabel: ViewModifier {
+    
+    var amount: Int
+    
+    func body(content: Content) -> some View {
+        content
+        .frame(width: 100, height:40)
+            .background(backgroundColor())
+            .foregroundColor(.white)
+            .cornerRadius(2)
+    }
+    
+    func backgroundColor() -> Color {
+        switch amount {
+        case 0...10:
+            return Color.black
+        case 11...99:
+            return Color.blue
+        default:
+            return Color.orange
+        }
+    }
+}
+
 struct ContentView: View {
     
     @Environment(\.presentationMode) var presentationMode
@@ -29,19 +54,21 @@ struct ContentView: View {
                         
                         Spacer()
                         Text("$\(item.amount)")
+                            .modifier(PrimaryLabel(amount: item.amount))
                     }
                 }
                 .onDelete(perform: removeItems)
             }
             .navigationBarTitle("iExpense")
-            .navigationBarItems(trailing:
+            .navigationBarItems(leading: EditButton(),
+                                trailing:
                 Button(action: {
                     self.showingAddExpense = true
                 }) {
                     Image(systemName: "plus")
                 }
             )
-                .sheet(isPresented: $showingAddExpense) {
+            .sheet(isPresented: $showingAddExpense) {
                     AddView(expenses: self.expenses)
             }
         }
