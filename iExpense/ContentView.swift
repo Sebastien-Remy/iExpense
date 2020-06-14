@@ -8,17 +8,6 @@
 
 import SwiftUI
 
-struct ExpenseItem: Identifiable {
-    let id = UUID()
-    let name: String
-    let type: String
-    let amount: Int
-}
-
-class Expenses: ObservableObject {
-    @Published var items = [ExpenseItem]()
-}
-
 struct ContentView: View {
     
     @ObservedObject var expenses = Expenses()
